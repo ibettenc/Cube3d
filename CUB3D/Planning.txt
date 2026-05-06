@@ -1,0 +1,15 @@
+1. parsing:
+Interprete la map(fichier .cub) + chargement de la map
+
+2. commandes: minimiser fenetre, adapter taille fenetre, etc. + ESC (fermer la fenetre doit free all)
+
+3. textures de mur, en fonction des directions cardinales. Plafond + sol en couleurs et pas texture. Garder les textures avec le meme nombre de pixel
+
+4. Bouger le personnage ou la camera						<-
+															 |- liees
+5. Raycasting, Field of view, cotes du FOV soient droits.   <-
+
+
+parsing de la map doit etre fait avec apres les 6 premiers inuts(directions, floor + plafond)
+gerer les cas invalides de maps(sachant quelle en sera pas carree), elle doit etre fermee(floodfill pour voir si on peut rentrer dans la map depuis l'exterieur) 
+
