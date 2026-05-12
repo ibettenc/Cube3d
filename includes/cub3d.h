@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibettenc <ibettenc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ivan <ivan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 14:32:36 by ibettenc          #+#    #+#             */
-/*   Updated: 2026/05/05 18:24:44 by ibettenc         ###   ########.fr       */
+/*   Updated: 2026/05/12 22:53:13 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft/libft.h"
 # include "mlx/mlx.h"
+# include <math.h>
 
 # define WIN_WIDTH   1280
 # define WIN_HEIGHT  720
@@ -74,6 +75,7 @@ typedef struct s_game {
     t_map       map;
     int         floor_color;
     int         ceil_color;
+    int         keys[6];
 }   t_game;
 
 /* mlx_init.c */
@@ -81,6 +83,8 @@ void	init_mlx(t_game *game);
 
 /* hooks.c */
 int		key_press(int key, t_game *game);
+int 	key_release(int key, t_game *game);
+
 int		close_window(t_game *game);
 int		game_loop(t_game *game);
 
@@ -94,7 +98,10 @@ void	init_player(t_game *game);
 void    init_ray(t_game *game, t_ray *ray, int x);
 void    init_dda(t_game *game, t_ray *ray);
 void    perform_dda(t_game *game, t_ray *ray);
+int     calcul_column(t_ray *ray);
 void    draw_column(t_game *game, t_ray *ray, int x);
 void    raycast(t_game *game);
 
+/* movement.c */
+void    handle_movement(t_game *game);
 #endif

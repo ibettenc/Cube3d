@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ibettenc <ibettenc@student.42.fr>          +#+  +:+       +#+         #
+#    By: ivan <ivan@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/26 19:36:14 by ibettenc          #+#    #+#              #
-#    Updated: 2026/05/05 15:30:33 by ibettenc         ###   ########.fr        #
+#    Updated: 2026/05/12 22:43:57 by ivan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,8 @@ SRC = $(SRC_DIR)/main.c \
       $(SRC_DIR)/hooks.c \
       $(SRC_DIR)/render.c \
 	  $(SRC_DIR)/player.c \
+	  $(SRC_DIR)/raycasting.c \
+	  $(SRC_DIR)/movement.c \
 
 OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 

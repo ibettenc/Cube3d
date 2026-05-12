@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibettenc <ibettenc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ivan <ivan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 15:05:14 by ibettenc          #+#    #+#             */
-/*   Updated: 2026/05/04 18:22:52 by ibettenc         ###   ########.fr       */
+/*   Updated: 2026/05/09 17:18:44 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,6 @@ void	init_mlx(t_game *game)
 			&game->screen.line_len,
 			&game->screen.endian
 		);
+	mlx_hook(game->win, 2, 1L<<0, key_press, game);
+	mlx_hook(game->win, 3, 1L<<1, key_release, game);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibettenc <ibettenc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ivan <ivan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 15:11:21 by ibettenc          #+#    #+#             */
-/*   Updated: 2026/05/05 18:50:04 by ibettenc         ###   ########.fr       */
+/*   Updated: 2026/05/09 17:19:33 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void    init_test_map(t_game *game) // /!\ map harcode, c juste en attend
 
 int	game_loop(t_game *game)
 {
+    handle_movement(game);
+    raycast(game);
 	mlx_put_image_to_window(game->mlx, game->win,
 		game->screen.img_ptr, 0, 0);
 	return (0);

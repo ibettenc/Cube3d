@@ -3,48 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibettenc <ibettenc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ivan <ivan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 18:17:36 by ibettenc          #+#    #+#             */
-/*   Updated: 2026/05/05 18:48:39 by ibettenc         ###   ########.fr       */
+/*   Updated: 2026/05/09 15:36:12 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	raycast(t_game *game)
-{
-	t_ray	ray;
-	int		x;
 
-	x = 0;
-	while (x < WIN_WIDTH)
-	{
-		init_ray(game, &ray, x);
-		init_dda(game, &ray);
-		perform_dda(game, &ray);
-		draw_column(game, &ray, x);
-		x++;
-	}
-}
-
-void	raycast(t_game *game)
-{
-	int	x;
-	// 1. calculer camera_x et ray_dir
-	x = 0;
-	while (x < WIN_WIDTH)
-	{
-
-		// 2. DDA
-
-
-		
-		// 3. calculer line_height, draw_start, draw_end
-		// 4. dessiner la colonne
-		x++;
-	}
-}
 
 void	init_ray(t_game *game, t_ray *ray, int x)
 {
@@ -84,9 +52,77 @@ void	init_dda(t_game *game, t_ray *ray)
 }
 
 // avance jusqu'au mur
-void	perform_dda(t_game *game, t_ray *ray); 
+void    perform_dda(t_game *game, t_ray *ray)
+{
+    while (game->map.grid[ray->map_y][ray->map_x] != '1')
+    {
+        if (ray->side_dist_x < ray->side_dist_y)
+        {
+            ray->side_dist_x += ray->delta_dist_x;
+            ray->map_x += ray->step_x;
+            ray->side = 0; // le ray touche mur cote N ou S
+        }
+        else
+        {
+            ray->side_dist_y += ray->delta_dist_y;
+            ray->map_y += ray->step_y;
+            ray->side = 1; // le ray touche mur cote O ou E
+        }
+    }
+}
 
-// calcule line_height, draw_start, draw_end, dessine
-void	draw_column(t_game *game, t_ray *ray, int x);
+int calcul_column(t_ray *ray)
+{
+	int color;
+	if (ray->side == 0)
+	{
+		ray->perp_wall_dist = ray->side_dist_x - ray->delta_dist_x;
+		color = 0xFF0000;
+	}
+	else
+	{
+		ray->perp_wall_dist = ray->side_dist_y - ray->delta_dist_y;
+		color = 0xAA0000; 
+	}
+	ray->line_height = WIN_HEIGHT / ray->perp_wall_dist;
+	ray->draw_start = WIN_HEIGHT / 2 - ray->line_height / 2;
+	ray->draw_end = WIN_HEIGHT / 2 + ray->line_height / 2;
+	if (ray->draw_start < 0) ray->draw_start = 0;
+	if (ray->draw_end >= WIN_HEIGHT) ray->draw_end = WIN_HEIGHT - 1;
+	return (color);
+}
 
-void	raycasting(t_game *game);
+void    draw_column(t_game *game, t_ray *ray, int x)
+{
+	int y;
+	int color;
+	
+	color = calcul_column(ray);
+	y = 0;
+	while (y < WIN_HEIGHT)
+	{
+		if (y < ray->draw_start)
+			put_pixel(&game->screen, x, y, game->ceil_color);
+		else if (y <= ray->draw_end)
+			put_pixel(&game->screen, x, y, color);
+		else
+			put_pixel(&game->screen, x, y, game->floor_color);
+		y++;
+	}
+}
+
+void	raycast(t_game *game)
+{
+	t_ray	ray;
+	int		x;
+
+	x = 0;
+	while (x < WIN_WIDTH)
+	{
+		init_ray(game, &ray, x);
+		init_dda(game, &ray);
+		perform_dda(game, &ray);
+		draw_column(game, &ray, x);
+		x++;
+	}
+}
