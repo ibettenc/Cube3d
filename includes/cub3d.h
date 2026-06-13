@@ -6,7 +6,7 @@
 /*   By: ivan <ivan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 14:32:36 by ibettenc          #+#    #+#             */
-/*   Updated: 2026/05/12 22:53:13 by ivan             ###   ########.fr       */
+/*   Updated: 2026/06/09 18:17:58 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 # define WIN_WIDTH   1280
 # define WIN_HEIGHT  720
+# define WALL_OFFSET 0
 
 typedef struct s_img {
     void    *img_ptr;
@@ -73,9 +74,9 @@ typedef struct s_game {
     t_img       textures[4]; // 0=NO, 1=SO, 2=EA, 3=WE
     t_player    player;
     t_map       map;
-    int         floor_color;
-    int         ceil_color;
     int         keys[6];
+    int         floor_color;
+    int ceil_color;
 }   t_game;
 
 /* mlx_init.c */
@@ -90,6 +91,11 @@ int		game_loop(t_game *game);
 
 /* render.c */
 void	put_pixel(t_img *img, int x, int y, int color);
+void load_textures(t_game *game);
+void get_data_addr(t_game * game);
+int get_tex_id(t_ray * ray);
+int get_tex_x(t_game *game, t_ray *ray, int tex_id);
+void draw_textured_wall(t_game *game, t_ray *ray, int x, int tex_id, int tex_x);
 
 /* player.c */
 void	init_player(t_game *game);
@@ -98,7 +104,7 @@ void	init_player(t_game *game);
 void    init_ray(t_game *game, t_ray *ray, int x);
 void    init_dda(t_game *game, t_ray *ray);
 void    perform_dda(t_game *game, t_ray *ray);
-int     calcul_column(t_ray *ray);
+void calcul_column(t_ray *ray);
 void    draw_column(t_game *game, t_ray *ray, int x);
 void    raycast(t_game *game);
 

@@ -6,7 +6,7 @@
 /*   By: ivan <ivan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 15:16:27 by ibettenc          #+#    #+#             */
-/*   Updated: 2026/05/09 17:17:02 by ivan             ###   ########.fr       */
+/*   Updated: 2026/06/09 18:18:08 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,20 @@
 
 static void	free_all(t_game *game)
 {
+	int i;
+
+	i = 0;
+	
 	// free screen
 	if (game->screen.img_ptr)
 		mlx_destroy_image(game->mlx, game->screen.img_ptr);
-
+	
+	while (i < 4)
+	{
+		mlx_destroy_image(game->mlx, game->textures[i].img_ptr);
+		i++;
+	}
+	
 	// free window
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
@@ -25,6 +35,7 @@ static void	free_all(t_game *game)
 	if (game->mlx)
 		mlx_destroy_display(game->mlx);
 
+	
 	// mlx ptr
 	if (game->mlx)
 		free(game->mlx);
@@ -36,6 +47,8 @@ int	close_window(t_game *game)
 	exit(0);
 	return (0);
 }
+
+/////////////////////////////////////////// faire un nouveau fichier
 
 int	key_press(int key, t_game *game)
 {

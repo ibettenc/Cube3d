@@ -6,7 +6,7 @@
 /*   By: ivan <ivan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/09 15:55:44 by ivan              #+#    #+#             */
-/*   Updated: 2026/05/12 22:54:05 by ivan             ###   ########.fr       */
+/*   Updated: 2026/06/06 20:10:36 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static void    move_forward(t_game *game, double dir)
 
     new_x = game->player.x + game->player.dir_x * game->player.move_speed * dir;
     new_y = game->player.y + game->player.dir_y * game->player.move_speed * dir;
-    if (game->map.grid[(int)game->player.y][(int)new_x] != '1') // (cast int car new_x et player.y sont des double)
+    if (game->map.grid[(int)game->player.y][(int)(new_x + WALL_OFFSET * game->player.dir_x)] != '1') // (cast int car new_x et player.y sont des double)
         game->player.x = new_x;
-    if (game->map.grid[(int)new_y][(int)game->player.x] != '1') // (cast int car new_y et player.x sont des double)
+    if (game->map.grid[(int)new_y][(int)(game->player.x  + WALL_OFFSET * game->player.dir_y)] != '1') // (cast int car new_y et player.x sont des double)
         game->player.y = new_y;
 }
 
@@ -32,9 +32,9 @@ static void    move_strafe(t_game *game, double dir)
 
     new_x = game->player.x + (-game->player.dir_y) * game->player.move_speed * dir; // tout est la mm chose sauf (-game->player.dir_y)
     new_y = game->player.y + game->player.dir_x * game->player.move_speed * dir;
-    if (game->map.grid[(int)game->player.y][(int)new_x] != '1')
+    if (game->map.grid[(int)game->player.y][(int)(new_x + WALL_OFFSET * (-game->player.dir_y))] != '1')
         game->player.x = new_x;
-    if (game->map.grid[(int)new_y][(int)game->player.x] != '1')
+    if (game->map.grid[(int)new_y][(int)(game->player.x + WALL_OFFSET * (-game->player.dir_y))] != '1')
         game->player.y = new_y;
 }
 

@@ -62,8 +62,8 @@ void	init_player(t_game *game)
 				game->player.x = x + 0.5;
 				game->player.y = y + 0.5;
 				set_player_direction(&game->player, curr);
-				game->player.move_speed = 0.05;
-				game->player.rot_speed = 0.03;
+				game->player.move_speed = 0.01;
+				game->player.rot_speed = 0.01;
 				return ;
 			}
 			x++;

@@ -6,7 +6,7 @@
 /*   By: ivan <ivan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 15:05:14 by ibettenc          #+#    #+#             */
-/*   Updated: 2026/05/09 17:18:44 by ivan             ###   ########.fr       */
+/*   Updated: 2026/06/08 19:46:49 by ivan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	init_mlx(t_game *game)
 	game->win = mlx_new_window(game->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 	if (!game->win)
 		exit(EXIT_FAILURE);
+	
+	load_textures(game);
+	get_data_addr(game);
 
 	game->screen.img_ptr = mlx_new_image(game->mlx, WIN_WIDTH, WIN_HEIGHT);
 	game->screen.addr = mlx_get_data_addr(
