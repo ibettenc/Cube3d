@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ivan <ivan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ibettenc <ibettenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 14:32:36 by ibettenc          #+#    #+#             */
-/*   Updated: 2026/06/09 18:17:58 by ivan             ###   ########.fr       */
+/*   Updated: 2026/06/13 16:57:30 by ibettenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # define WIN_WIDTH   1280
 # define WIN_HEIGHT  720
-# define WALL_OFFSET 0
+# define WALL_OFFSET 0.2
 
 typedef struct s_img {
     void    *img_ptr;
