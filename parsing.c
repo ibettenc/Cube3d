@@ -6,7 +6,7 @@
 /*   By: raantoin <raantoin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 14:57:15 by raantoin          #+#    #+#             */
-/*   Updated: 2026/06/08 19:59:11 by raantoin         ###   ########.fr       */
+/*   Updated: 2026/06/15 19:55:23 by raantoin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	**parser(char *full_file, t_map_par *map_par)
 	int		file_fd;
 	int		i;
 	
+	i = file_len_nb(file_fd);
+	file_text = malloc(i * sizeof(char *) + 1);
 	i = 0;
 	file_text = NULL;
 	file_fd = open(full_file, O_RDONLY);
@@ -33,6 +35,24 @@ char	**parser(char *full_file, t_map_par *map_par)
 	 if (file_sorter(file_text, map_par) == 0)
 		return (NULL); // dans main.c, si fichier == NULL, exit le programme
 	return (file_text);
+}
+
+int	file_len_nb(int file_fd)
+{
+	char	*buffer;
+	int		line_nb;
+	
+	line_nb = 0;
+	open(file_fd, O_RDONLY);
+	buffer = get_next_line(file_fd);
+	while (buffer != NULL)
+	{
+		line_nb++;
+		free(buffer);
+		buffer = get_next_line(file_fd);	
+	}
+	close(file_fd);
+	return (line_nb);
 }
 
 int	skip_spaces(int j, char *line)
@@ -105,24 +125,7 @@ int	sorter_colour(char **file, int i, int j, t_map_par *map_par)
 		return (1);
 }
 
-int	file_sort_walls(char *wall, t_map_par *map_par)//enlever?
-{
-	int		i;
-	
-	i = 0;
-	if (wall[i] == 'W' && wall[i + 1] == 'E')
-	{
-		while (wall[i])
-		{
-			i = skip_spaces(i, &wall[i]);
-			if (is_accessible(&wall[i]))
-				map_par->west_wall = &wall[i];
-		}
-	}
-	if (wall[i] == 'E' && wall[i + 1] == 'A')
-	if (wall[i] == 'N' && wall[i + 1] == 'O')
-	if (wall[i] == 'S' && wall[i + 1] == 'O')
-}
+
 
 //savoir passer par des lignes vides et recuperer les infos malgre l'ordre
 //  Except for the map, each type of information from an element can be separated by one or more spaces.
