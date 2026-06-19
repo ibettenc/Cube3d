@@ -6,7 +6,7 @@
 /*   By: ibettenc <ibettenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 18:15:14 by ibettenc          #+#    #+#             */
-/*   Updated: 2026/06/15 16:30:40 by ibettenc         ###   ########.fr       */
+/*   Updated: 2026/06/19 15:14:56 by ibettenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	init_player(t_game *game)
 				game->player.x = x + 0.5;
 				game->player.y = y + 0.5;
 				set_player_direction(&game->player, curr);
-				game->player.move_speed = 0.025;
+				game->player.move_speed = 0.02;
 				game->player.rot_speed = 0.02;
 				return ;
 			}

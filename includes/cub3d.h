@@ -6,7 +6,7 @@
 /*   By: ibettenc <ibettenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 14:32:36 by ibettenc          #+#    #+#             */
-/*   Updated: 2026/06/13 16:57:30 by ibettenc         ###   ########.fr       */
+/*   Updated: 2026/06/19 15:49:06 by ibettenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include "mlx/mlx.h"
 # include <math.h>
 
-# define WIN_WIDTH   1280
-# define WIN_HEIGHT  720
+# define WIN_WIDTH   1800
+# define WIN_HEIGHT  1200
 # define WALL_OFFSET 0.2
 
 typedef struct s_img {
@@ -58,6 +58,9 @@ typedef struct s_ray
     int     line_height;
     int     draw_end;
     int     draw_start;
+    int     tex_id;
+    int     tex_x;
+    int     tex_y;
     double  ray_dir_x;  // direction du rayon
     double  ray_dir_y;
     double  delta_dist_x;
@@ -91,11 +94,11 @@ int		game_loop(t_game *game);
 
 /* render.c */
 void	put_pixel(t_img *img, int x, int y, int color);
-void load_textures(t_game *game);
-void get_data_addr(t_game * game);
-int get_tex_id(t_ray * ray);
-int get_tex_x(t_game *game, t_ray *ray, int tex_id);
-void draw_textured_wall(t_game *game, t_ray *ray, int x, int tex_id, int tex_x);
+void    load_textures(t_game *game);
+void    get_data_addr(t_game * game);
+int     get_tex_id(t_ray * ray);
+int     get_tex_x(t_game *game, t_ray *ray);
+void    draw_textured_wall(t_game *game, t_ray *ray, int x);
 
 /* player.c */
 void	init_player(t_game *game);
@@ -104,7 +107,7 @@ void	init_player(t_game *game);
 void    init_ray(t_game *game, t_ray *ray, int x);
 void    init_dda(t_game *game, t_ray *ray);
 void    perform_dda(t_game *game, t_ray *ray);
-void calcul_column(t_ray *ray);
+void    calcul_column(t_ray *ray);
 void    draw_column(t_game *game, t_ray *ray, int x);
 void    raycast(t_game *game);
 

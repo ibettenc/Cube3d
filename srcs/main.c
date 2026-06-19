@@ -6,7 +6,7 @@
 /*   By: ibettenc <ibettenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 15:11:21 by ibettenc          #+#    #+#             */
-/*   Updated: 2026/06/13 16:32:20 by ibettenc         ###   ########.fr       */
+/*   Updated: 2026/06/16 14:15:01 by ibettenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	init_test_map(t_game *game) // /!\ map harcode, c juste en attendant
 		"1111111111111",
 		NULL
 	};
-    
+
 	game->map.grid = grid;
 	game->map.width = 9;
 	game->map.height = 9;

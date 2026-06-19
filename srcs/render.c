@@ -6,21 +6,11 @@
 /*   By: ibettenc <ibettenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 18:17:34 by ibettenc          #+#    #+#             */
-/*   Updated: 2026/06/15 17:09:55 by ibettenc         ###   ########.fr       */
+/*   Updated: 2026/06/16 15:04:03 by ibettenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-void	put_pixel(t_img *img, int x, int y, int color)
-{
-	char	*dst;
-
-	if (x < 0 || x >= WIN_WIDTH || y < 0 || y >= WIN_HEIGHT)
-		return ;
-	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	*(unsigned int *)dst = color;
-}
 
 void	load_textures(t_game *game)
 {
@@ -56,20 +46,18 @@ void	get_data_addr(t_game *game)
 
 int	get_tex_id(t_ray *ray)
 {
-	int	tex_id;
-
 	if (ray->side == 0 && ray->step_x > 0)
-		tex_id = 2;
+		ray->tex_id = 2;
 	if (ray->side == 0 && ray->step_x < 0)
-		tex_id = 0;
+		ray->tex_id = 0;
 	if (ray->side == 1 && ray->step_y > 0)
-		tex_id = 1;
+		ray->tex_id = 1;
 	if (ray->side == 1 && ray->step_y < 0)
-		tex_id = 3;
-	return (tex_id);
+		ray->tex_id = 3;
+	return (ray->tex_id);
 }
 
-int	get_tex_x(t_game *game, t_ray *ray, int tex_id)
+int	get_tex_x(t_game *game, t_ray *ray)
 {
 	double	ray_impact;
 
@@ -78,29 +66,28 @@ int	get_tex_x(t_game *game, t_ray *ray, int tex_id)
 	else
 		ray_impact = game->player.x + ray->perp_wall_dist * ray->ray_dir_x;
 	ray_impact = ray_impact - floor(ray_impact);
-	return ((int)(ray_impact * game->textures[tex_id].width));
+	return ((int)(ray_impact * game->textures[ray->tex_id].width));
 }
 
-void	draw_textured_wall(t_game *game, t_ray *ray, int x, int tex_id, int tex_x)
+void	draw_textured_wall(t_game *game, t_ray *ray, int x)
 {
 	double	step_tex;
 	double	tex_pos;
-	int		tex_y;
 	int		color;
 	char	*tex_addr;
 	int		y;
 
-	step_tex = (double)game->textures[tex_id].height / ray->line_height;
+	step_tex = (double)game->textures[ray->tex_id].height / ray->line_height;
 	tex_pos = (ray->draw_start - WIN_HEIGHT
 			/ 2 + ray->line_height / 2) * step_tex;
 	y = ray->draw_start;
 	while (y <= ray->draw_end)
 	{
-		tex_y = (int)tex_pos & (game->textures[tex_id].height - 1);
+		ray->tex_y = (int)tex_pos & (game->textures[ray->tex_id].height - 1);
 		tex_pos += step_tex;
-		tex_addr = game->textures[tex_id].addr
-			+ (tex_y * game->textures[tex_id].line_len
-				+ tex_x * (game->textures[tex_id].bpp / 8));
+		tex_addr = game->textures[ray->tex_id].addr
+			+ (ray->tex_y * game->textures[ray->tex_id].line_len
+				+ ray->tex_x * (game->textures[ray->tex_id].bpp / 8));
 		color = *(unsigned int *)tex_addr;
 		if (ray->side == 1)
 			color = (color >> 1) & 0x7F7F7F;
